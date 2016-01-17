@@ -1,0 +1,33 @@
+---
+title: "Understanding the Data Structure"
+output: html_document
+---
+
+This documents contains possible commands that can be used to further understand the data before starting modelling work etc.
+
+Quick commands to get basic information regarding data.
+Some things to probably to try to understand would be:
+* Spread of the data
+* Whether data has a lot outlier
+* How does the each attribute in the data relate to each other and how they relate to the dependent variable
+
+```{r}
+str(mtcars)
+summary(mtcars)
+range(mtcars$mpg)
+IQR(mtcars$mpg)
+quantile(mtcars$mpg)
+quantile(mtcars$hp, probs = c(0.01, 0.99))
+```
+
+Plots made at this stage are mainly exploratory in nature. The faster to plot, the faster to understand the data
+
+Some possible plots
+```{r}
+# Boxplot
+boxplot(mtcars$disp, main = "Boxplot of displacement of mtcars", ylab = "cc")
+
+# Histogram plot
+hist(mtcars$disp, main = "Histogram of displacement of mtcars", xlab = "cc")
+```
+
