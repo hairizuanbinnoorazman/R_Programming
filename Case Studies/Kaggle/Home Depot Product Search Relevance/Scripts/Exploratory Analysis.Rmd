@@ -1,0 +1,50 @@
+---
+title: "Home Depot Product Search Relevance: Exploratory Analysis"
+output: html_document
+---
+
+# Defining the necessary directories/importing of packages
+```{r}
+# Define directories
+rawDataFolder <- "../Data/Raw Data/"
+processDataFolder <- "../Data/Processed Data/"
+
+# Define raw data
+fileName_attributes <- paste0(rawDataFolder, "attributes.csv")
+fileName_train <- paste0(rawDataFolder, "train.csv")
+fileName_product_descriptions <- paste0(rawDataFolder, "product_descriptions.csv")
+```
+
+# Exploring attributes dataset
+Take note that the attributes dataset contains ~2 million rows.
+- The structure of the data is one of a flat table
+- Columns within this data
+  - product_uid
+  - name
+  - value
+
+```{r, cache=TRUE}
+attributes <- read.csv(fileName_attributes)
+
+# How many products am I dealing with?
+noOfProducts <- unique(attributes$product_uid)
+length(noOfProducts) # 86264
+
+# How many types of 'attributes' in this dataset?
+attributeType <- unique(attributes$name)
+length(attributeType) # 5411 types of product attributes
+sort(attributeType) # To view the type of attributes used
+```
+
+# Exploring train dataset
+
+```{r, cache=TRUE}
+train <- read.csv(fileName_train)
+```
+
+# Exploring product descriptions
+
+```{r, cache=TRUE}
+product_descriptions <- read.csv(file_descriptions)
+```
+
