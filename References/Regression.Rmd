@@ -24,10 +24,12 @@ spam dataset in kernlab package | test | Try to predict whether an email is spam
 
 ## SPAM Example
 
-```{r, cache = TRUE}
+```{r, cache = TRUE, warning = FALSE}
 library(caret)
 library(kernlab)
+# Spam dataset has 4601 rows and 58 columns including the column that is to be predicted
 data(spam)
+dim(spam)
 # Partition is the split percentage
 # List is to choose output of whether it being a list or matrix
 inTrain <- createDataPartition(y = spam$type, p = 0.7, list = FALSE)
@@ -42,6 +44,18 @@ modelFit$finalModel
 predictions <- predict(modelFit, newdata = testing)
 predictions
 confusionMatrix(predictions, testing$type)
+
+# K-fold data splitting - n-fold cross validation
+set.seed(1000)
+folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = TRUE)
+sapply(folds, length)
+folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = FALSE)
+sapply(folds, length)
+
+# Bootstrapping - sampling with replacement
+set.seed(1000)
+folds <- createResample(y = spam$type, times = 20, list = TRUE)
+sapply(folds, length)
 ```
 
 You can also embed plots, for example:
@@ -50,4 +64,7 @@ You can also embed plots, for example:
 plot(cars)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## References
+
+Refer to the vignettes available in the caret. Quick start guide on using the caret package.
+https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf
