@@ -5,11 +5,43 @@ output: html_document
 
 This document contains sample code on using the caret package to run regression models on data.
 
+## A brief summary of how-to-do modelling projects
 As with every modelling project, there are several parts before building a model;
-* Data Slicing (Spliting the data with at least a 70:30 ratio)
+* Data Slicing (Spliting the data with at least a 70:30 ratio). 70% of the data is to be used for training purposes while 30% would be used for testing purposes. This would usually be the usual configuration but out there, some possible configurations could be 70:20:10 (training:testing:evaluation).
+* Data exploration. Exploring the data and creating new predictors if necessary (Possible to extract data from already available data and put it into the data)
+* Data training. Training the data based on the new preprocessed dataset to predict the 'y' variable
+* Model evaluation. Evaluate the accuracy of the model. If you are using logistic regression etc, it may be possible to vizualize this via a ROC curve. A ROC curve > 80% is considered good while anything below 50% is considered worst than random. At this stage, use the testing data available to test the model created from the training data.
+* Model deployment. Deploy model to production
 
-```{r}
-summary(cars)
+## Contents of this document
+This document would contain from start to end the steps to do a modelling project and will include the easy and difficult sample codes for easier reference in the future.
+
+List of datasets and a description of its predictors and its aim
+
+Name of dataset | Description of predictors | Aim of modelling this dataset
+--- |--- |---
+spam dataset in kernlab package | test | Try to predict whether an email is spam or ham based on various predictors available in the dataset
+
+## SPAM Example
+
+```{r, cache = TRUE}
+library(caret)
+library(kernlab)
+data(spam)
+# Partition is the split percentage
+# List is to choose output of whether it being a list or matrix
+inTrain <- createDataPartition(y = spam$type, p = 0.7, list = FALSE)
+training <- spam[inTrain, ]
+testing <- spam[-inTrain,  ]
+dim(training)
+# Set seed
+# In all computers, random is not really random but dependent on a set of numbers and parameters. One of the parameter is seed. In order to ensure that our model can be replicated by other people, we should set a seed which would allow their results to be comparable to ours
+set.seed(1000)
+modelFit <- train(type ~ ., data = training, method = "glm") # Generalized linear models
+modelFit$finalModel
+predictions <- predict(modelFit, newdata = testing)
+predictions
+confusionMatrix(predictions, testing$type)
 ```
 
 You can also embed plots, for example:
