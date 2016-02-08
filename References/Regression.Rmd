@@ -64,7 +64,7 @@ You can also embed plots, for example:
 plot(cars)
 ```
 
-## References
+## Reference
 
 Refer to the vignettes available in the caret. Quick start guide on using the caret package.
 https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf
