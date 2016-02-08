@@ -1,0 +1,21 @@
+---
+title: "Regression"
+output: html_document
+---
+
+This document contains sample code on using the caret package to run regression models on data.
+
+As with every modelling project, there are several parts before building a model;
+* Data Slicing (Spliting the data with at least a 70:30 ratio)
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

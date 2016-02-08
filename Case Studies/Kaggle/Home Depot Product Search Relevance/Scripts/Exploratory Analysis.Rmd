@@ -37,14 +37,27 @@ sort(attributeType) # To view the type of attributes used
 ```
 
 # Exploring train dataset
+- Columns within this dataset
+  - id
+  - product_uid
+  - product_title
+  - search_term
+  - relevance
 
 ```{r, cache=TRUE}
 train <- read.csv(fileName_train)
+
+# How many of types of products within this dataset
+noOfProducts <- unique(train$product_uid)
+
 ```
 
 # Exploring product descriptions
+- Columns within this dataset
+  - product_uid
+  - product_description
 
 ```{r, cache=TRUE}
-product_descriptions <- read.csv(file_descriptions)
+product_descriptions <- read.csv(fileName_product_descriptions)
 ```
 
