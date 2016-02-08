@@ -13,6 +13,8 @@ As with every modelling project, there are several parts before building a model
 * Model evaluation. Evaluate the accuracy of the model. If you are using logistic regression etc, it may be possible to vizualize this via a ROC curve. A ROC curve > 80% is considered good while anything below 50% is considered worst than random. At this stage, use the testing data available to test the model created from the training data.
 * Model deployment. Deploy model to production
 
+Refer to the respective markdown files for more details
+
 ## Contents of this document
 This document would contain from start to end the steps to do a modelling project and will include the easy and difficult sample codes for easier reference in the future.
 
@@ -44,24 +46,6 @@ modelFit$finalModel
 predictions <- predict(modelFit, newdata = testing)
 predictions
 confusionMatrix(predictions, testing$type)
-
-# K-fold data splitting - n-fold cross validation
-set.seed(1000)
-folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = TRUE)
-sapply(folds, length)
-folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = FALSE)
-sapply(folds, length)
-
-# Bootstrapping - sampling with replacement
-set.seed(1000)
-folds <- createResample(y = spam$type, times = 20, list = TRUE)
-sapply(folds, length)
-```
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
 ```
 
 ## Reference

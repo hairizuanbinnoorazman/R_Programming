@@ -31,3 +31,60 @@ boxplot(mtcars$disp, main = "Boxplot of displacement of mtcars", ylab = "cc")
 hist(mtcars$disp, main = "Histogram of displacement of mtcars", xlab = "cc")
 ```
 
+## Understanding another dataset: Wage dataset from ISLR
+
+```{r}
+# Load libraries
+library(ISLR)
+library(ggplot2)
+library(caret)
+library(Hmisc)
+
+# You can immediately identify a few things regarding this data
+# Gender is all male from middle atlantic
+data(Wage)
+summary(Wage)
+
+# Combine this data exploration with concepts from training a model - need to do data slicing
+set.seed(1000)
+inTrain <- createDataPartition(y = Wage$wage, p = 0.7, list = FALSE)
+training <- Wage[inTrain, ]
+testing <- Wage[-inTrain, ]
+dim(training)
+dim(testing)
+
+# Types of plots
+# For classification problems - box, strip, density, pairs, ellipsse
+# For regression - pairs, scatter
+featurePlot(x = training[, c("age", "education", "jobclass")], y = training$wage, plot = "pairs")
+
+# Can use ggplot2 in this case
+qplot(age, wage, data = training)
+qplot(age, wage, color = jobclass, data = training)
+
+qq <- qplot(age, wage, color = education, data = training)
+qq + geom_smooth(method = "lm", formula = y ~ x)
+
+# Let's say you go through numerical datasets
+# And there is a need to categorize them, can use the Hmisc package - broken via quantile groups
+cutWage <- cut2(training$wage, g = 3)
+table(cutWage)
+
+# Boxplot with cut 2
+p1 <- qplot(cutWage, age, data = training, fill = cutWage, geom = c("boxplot","jitter"))
+p1
+
+# Table data
+t1 <- table(cutWage, training$jobclass)
+t1
+prop.table(t1, 1) # Get proportion of the group - 1 means row, 1 mean group
+
+# Density plots
+qplot(wage, color = education, data = training, geom = "density")
+```
+
+## Things to look out for during data exploration
+* Imbalance in outcomes/predictors (skewed data)
+* Outliers
+* Groups of points not explained by a predictor
+* Skewed variables

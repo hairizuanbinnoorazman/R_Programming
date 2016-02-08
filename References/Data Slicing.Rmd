@@ -1,0 +1,63 @@
+---
+title: "Data Slicing"
+output: html_document
+---
+
+# Data Slicing
+The art of spliting a dataset to its respective training and testing sets. How does one do it? Why do a certain way of data slicing and not the others e.g. Why use bootstraping instead of using n-fold cross validation. Is there any benefit of using either methods?
+
+## A brief summary of how-to-do modelling projects
+As with every modelling project, there are several parts before building a model;
+* Data Slicing (Spliting the data with at least a 70:30 ratio). 70% of the data is to be used for training purposes while 30% would be used for testing purposes. This would usually be the usual configuration but out there, some possible configurations could be 70:20:10 (training:testing:evaluation).
+
+## Doing a normal split of 70:30 ratio
+This way of data slicing involves separating the data via sampling to 2 datasets. 70% of data records fall into the training dataset and 30% of data records fall into the testing dataset.
+
+```{r}
+library(caret)
+library(kernlab)
+# Spam dataset has 4601 rows and 58 columns including the column that is to be predicted
+data(spam)
+dim(spam)
+# Partition is the split percentage
+# List is to choose output of whether it being a list or matrix
+inTrain <- createDataPartition(y = spam$type, p = 0.7, list = FALSE)
+training <- spam[inTrain, ]
+testing <- spam[-inTrain,  ]
+```
+
+## n-fold cross validation
+Cross validation
+
+```{r}
+# K-fold data splitting - n-fold cross validation
+library(caret)
+library(kernlab)
+set.seed(1000)
+folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = TRUE)
+sapply(folds, length)
+folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = FALSE)
+sapply(folds, length)
+```
+
+## Bootstrapping
+
+```{r}
+# Bootstrapping - sampling with replacement
+library(caret)
+library(kernlab)
+set.seed(1000)
+folds <- createResample(y = spam$type, times = 20, list = TRUE)
+sapply(folds, length)
+```
+
+## Time slicing
+
+```{r}
+# Time slices - data that is dependent on order
+set.seed(1000)
+timeVector <- 1:1000
+folds <- createTimeSlices(y = timeVector, initialWindow = 20, horizon = 10)
+names(folds)
+```
+
