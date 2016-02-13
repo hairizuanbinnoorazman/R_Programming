@@ -3,16 +3,51 @@ title: "Time Series Analysis"
 output: html_document
 ---
 
-Time series analysis can be done with native R objects such as vector, matrix and data.frame objects. However, 
+Time series analysis can be done with native R objects such as vector, matrix and data.frame objects. However, in some cases, the information in those native object may contain all the functionality required to do a full analysis on a time series dataset
 
 ```{r}
-summary(cars)
+#install.packages("zoo")
+library(zoo)
+
+# Getting the data to play around with zoo package
+# install.packages("quantmod")
+library(quantmod)
+library(dplyr)
+chartSeries(AAPL)
+timeData <- data.frame(AAPL)
+timeData <- mutate(timeData, Date = row.names(timeData))
+timeData <- select(timeData, Date, AAPL.Close)
+
+# Passing the data to zoo
+aapl <- read.zoo(timeData)
 ```
 
-You can also embed plots, for example:
+Understanding what is within the aapl zoo dataset
 
-```{r, echo=FALSE}
-plot(cars)
+```{r}
+plot(aapl, main = "Apple Closing Prices on NASDAQ", ylab = "Prices (USD)", xlab = "Date")
+
+# Get the data point where aapl was the maximum
+aapl[which.max(aapl)]
+
+# Get the data point where aapl was the minimum
+aapl[which.min(aapl)]
+
+ret_simple <- diff(aapl) / lag(aapl, k = -1) * 100
+ret_count <- diff(log(aapl)) * 100
+
+# coredata strips of all "time" attributes within the xts dataset
+summary(coredata(ret_simple))
+
+quantile(ret_simple, probs = 0.01)
+
+# Histogram of returns
+hist(ret_simple, breaks = 100, main = "Histogram of Simple Returns", xlab = "%")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Restricting the analysis to a shorter time frame
+
+```{r}
+aapl_2013 <- window(aapl, start = "2013-01-01", end = "2013-12-31")
+aapl_2013[which.max(aapl_2013)]
+```
