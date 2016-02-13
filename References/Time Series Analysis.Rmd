@@ -51,3 +51,8 @@ Restricting the analysis to a shorter time frame
 aapl_2013 <- window(aapl, start = "2013-01-01", end = "2013-12-31")
 aapl_2013[which.max(aapl_2013)]
 ```
+
+Using the forecast package for modelling time series data
+
+```{r}
+```
