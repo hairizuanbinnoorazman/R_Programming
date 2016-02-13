@@ -1,0 +1,18 @@
+---
+title: "Time Series Analysis"
+output: html_document
+---
+
+Time series analysis can be done with native R objects such as vector, matrix and data.frame objects. However, 
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
