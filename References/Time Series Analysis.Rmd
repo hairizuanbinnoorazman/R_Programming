@@ -58,6 +58,16 @@ aapl_2013[which.max(aapl_2013)]
 
 ## Modelling time series data
 
+### ARIMA
+
+Time series models involves decomposing it into trends, seasonal, cyclical and irregular components. One modelling technique available for use would be the ARIMA models. However, when using the ARIMA models, the models are made simpler by ignoring lags of the past y-variables on itself. E.g. Amount of money in your bank account today is dependent on amount of moeny in your bank account last month. It would overestimate the relationship between dependent and independent variables.
+
+As mentioned earlier, ARIMA techniques is used to break up the time series data such after you remove the trends, and its other components, what would be left is simply white noise. White noise is the "error" term of the whole time series data set and is said to be series in which every point in the series is a random draw from a population with zero mean and constant variance
+
+ARIMA consists of 2 parts AR (Auto Regressive) and MA (moving average) models.
+
+AR models are models in which the value of a variable in one period is related to its values in previous periods
+
 ```{r}
 data <- read.zoo("../Data/UKHP.csv", sep = ",", header = TRUE, format = "%Y-%m", FUN = as.yearmon)
 
@@ -81,3 +91,6 @@ mod <- auto.arima(data, stationary = TRUE, seasonal = FALSE, ic = "aic")
 
 mod
 ```
+
+Refer to the following site for full details
+https://sites.google.com/site/econometricsacademy/econometrics-models/time-series-arima-models
