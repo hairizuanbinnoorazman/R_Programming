@@ -66,7 +66,27 @@ As mentioned earlier, ARIMA techniques is used to break up the time series data 
 
 ARIMA consists of 2 parts AR (Auto Regressive) and MA (moving average) models.
 
-AR models are models in which the value of a variable in one period is related to its values in previous periods
+AR models are models in which the value of a variable in one period is related to its values in previous periods. It can be denoted as AR(p) where p is the number of lags.
+Formula: CurrentValue = constant + factor * Previous(p)Values + ErrorTerm
+If the factor is positive, it would reinforce the pattern, if the trend is going down, it's gonna continue going down.
+If the factor is negative, it would introuduce more oscillations into the resultant graphs
+
+MA models are models in which the value of a variable in one period is related to its residuals in previous periods. It can be denoted as MA(q) where q is the number of lags
+Formula: currentValue = constant + errorTerm + factor * previousErrorTerm
+Similar to AR models, if factor is positive, it reinforce the pattern. If factor is negative, it would introduce more oscillations.
+
+Combining AR and MA models in ARIMA
+ARMA (p,q)
+currentValue + contant + factor * previousValue + errorTerm + factor2 * previousErrorTerm
+However, ARMA (p,q) process require stationarity - means no uptrends or seasons etc.
+
+This is done via Detrending.
+currentValue = constant + Beta * time + errorTerm -> errorTerm goes into ARMA process if its ok.
+
+Another thing to do could Differencing
+Get graph: Difference = CurrentValueInTimeSeries - PreviousValueInTimeSeries
+
+
 
 ```{r}
 data <- read.zoo("../Data/UKHP.csv", sep = ",", header = TRUE, format = "%Y-%m", FUN = as.yearmon)
