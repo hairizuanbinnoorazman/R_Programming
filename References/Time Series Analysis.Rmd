@@ -86,7 +86,24 @@ currentValue = constant + Beta * time + errorTerm -> errorTerm goes into ARMA pr
 Another thing to do could Differencing
 Get graph: Difference = CurrentValueInTimeSeries - PreviousValueInTimeSeries
 
+Hence, after all the actions above.
+ARIMA(p,d,q) - p autoregressive lage, q movingaverage lages and differencing d
 
+How to test for Stationarity
+- Dicker-Fuller Test
+- Augmented Dicker-Fuller test
+- Dicker-Fuller test with a time trend
+
+AutoCorrelation Functions
+Partial autocorrelation function
+
+Diagnostics for ARIMA Models
+Box-Pierce statistics
+Ljung-Box statistic
+AIC - Akaike Information Criterion
+BIC - Bayesian Information Criterion
+
+If you have time series data, you can use the Box-Jenkins Methodology for ARIMA Model Selection
 
 ```{r}
 data <- read.zoo("../Data/UKHP.csv", sep = ",", header = TRUE, format = "%Y-%m", FUN = as.yearmon)
