@@ -12,3 +12,4 @@ The following content would be available in the future
 * Time Series Analysis (Under construction)
 * Quantitative Finance with R (In the pipeline)
 * Using Shiny (In the pipeline)
+* Using Shiny Dashboards (Another dashboard framework)
